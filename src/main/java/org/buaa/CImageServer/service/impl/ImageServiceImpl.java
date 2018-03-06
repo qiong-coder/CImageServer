@@ -15,9 +15,9 @@ public class ImageServiceImpl implements ImageService {
     ImageLogic imageLogic;
 
     @Override
-    public List<String> put(String product, String[] paths, Boolean compress, Part[] images) {
+    public List<String> put(String product, String[] paths, String[] filenames, Boolean compress, Part[] images) {
         if ( paths.length != images.length ) return null;
-        return imageLogic.put(product, paths, compress, images);
+        return imageLogic.put(product, paths, filenames, compress, images);
     }
 
     @Override

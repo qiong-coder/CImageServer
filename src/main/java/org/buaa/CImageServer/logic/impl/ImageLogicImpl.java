@@ -21,10 +21,23 @@ public class ImageLogicImpl implements ImageLogic {
         if (!f.exists()) f.mkdirs();
     }
 
-    private void delete(String dir)
-    {
+    private void delete(String dir) {
         File f = new File(dir);
-        if ( f.exists()) f.delete();
+        if (f.exists()) f.delete();
+    }
+
+    private String ftype(String filename)
+    {
+        int begin = filename.lastIndexOf(".");
+        if ( begin == -1 ) return null;
+        else return filename.substring(filename.lastIndexOf(".")+1);
+    }
+
+    private String fname(String filename)
+    {
+        int begin = filename.lastIndexOf("/");
+        int end = filename.lastIndexOf(".");
+        return filename.substring(begin==-1?0:begin,end==-1?filename.length():end);
     }
 
     @Override
@@ -34,23 +47,28 @@ public class ImageLogicImpl implements ImageLogic {
     }
 
     @Override
-    public List<String> put(String product, String[] paths, Boolean compress, Part[] images) {
+    public List<String> put(String product, String[] paths, String[] filenames, Boolean compress, Part[] images) {
         List<String> locations = Lists.newArrayList();
 
         for ( int i = 0; i < paths.length; ++ i ) {
 
             String path = paths[i];
             String filename_prefix = prefix + "/" +product + "/" + path + "/";
-            mkdir(filename_prefix);
 
             Part image = images[i];
             if ( image.getSize() == 0 ) return null;
-            String filename = image.getSubmittedFileName().substring(0,image.getSubmittedFileName().lastIndexOf("."));
+
+            mkdir(filename_prefix);
+
+            String filename = filenames == null?fname(image.getSubmittedFileName()):fname(filenames[i]);
+
+            String filetype = ftype(image.getSubmittedFileName());
+            if ( filetype == null ) filetype = "jpg";
 
             try {
-                image.write(filename_prefix+"/"+image.getSubmittedFileName());
-                if ( compress ) compress(filename_prefix+"/"+ image.getSubmittedFileName(),
-                        filename_prefix+"/"+filename+"_compress.jpg",
+                image.write(filename_prefix+filename+"."+filetype );
+                if ( compress ) compress(filename_prefix+filename+"."+filetype,
+                        filename_prefix+filename+"_compress.jpg",
                         320,
                         240,
                         1.0f);
@@ -58,7 +76,7 @@ public class ImageLogicImpl implements ImageLogic {
                 return null;
             }
 
-            locations.add(product+ "/" + path +"/"+image.getSubmittedFileName());
+            locations.add(product+ "/" + path +"/"+filename+"."+filetype);
         }
         return locations;
     }

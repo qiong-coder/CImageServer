@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface ImageService {
 
-    List<String> put(String product, String[] paths, Boolean compress, Part[] images);
+    List<String> put(String product, String[] paths, String[] filenames, Boolean compress, Part[] images);
 
     void delete(String product, String path);
 }

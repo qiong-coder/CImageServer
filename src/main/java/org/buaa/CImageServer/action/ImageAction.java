@@ -22,9 +22,10 @@ public class ImageAction {
     @RequestMapping(value = "/{product}", method = RequestMethod.POST)
     public JSONObject put(@PathVariable String product,
                           @RequestParam String[] paths,
+                          @RequestParam(value = "filenames", required = false) String[] filenames,
                           @RequestParam(value = "compress", required = false, defaultValue = "false") Boolean compress,
                           @RequestPart Part[] images) {
-        return ResponseBuilder.builder(imageService.put(product, paths, compress, images));
+        return ResponseBuilder.builder(imageService.put(product, paths, filenames, compress, images));
     }
 
     @RequestMapping(value = "/{product}", method = RequestMethod.DELETE)

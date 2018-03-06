@@ -3,11 +3,11 @@
 * 接口说明
   | 接口列表 | 路径                               | 说明 |
   |----------+------------------------------------+------|
-  | 图片存储 | http://ip:host/cis/image/{product} | 用来存储提交的图片，并放回存储路径 |
+  | 图片存储 | http://ip:host/CImageServer/image/{product} | 用来存储提交的图片，并放回存储路径 |
 
 * 接口详细说明
 ** 图片存储
-   + =请求路径= :: http://ip:host/cis/image/{product}
+   + =请求路径= :: http://ip:host/CImageServer/image/{product}
    + =请求方法= :: POST multipart/form-data 加密
    + =请求参数= ::
                | 参数     | 类型         | 参数所在位置                       | 说明                                                                       | 是否可选       |
@@ -16,7 +16,7 @@
                | paths    | list<string> | URL请求参数或者multipart中局部参数 | 用来指定所要存储图片的路径，用来实现图片顺序、分组的一些逻辑，应用程序负责 | 否             |
                | compress | string       | URL请求参数或者multipart中局部参数 | 用来表示图片是否进行压缩                                                   | 是，默认不压缩 |
                | images   | list<image>  | multipart上传                      | 上传的图片，必须与paths的大小一样                                          | 否             |
-   + =返回结果= :: List<string> 表示的对应的图片存储的路经，可以认为是 product/paths/images_name 拼接的字符串，读取图片的url为 http://ip:port/image/product/path/images_name 即可读取图片。
+   + =返回结果= :: List<string> 表示的对应的图片存储的路经，可以认为是 product/paths/images_name 拼接的字符串，读取图片的url为 http://ip:port/images/product/path/images_name 即可读取图片。
                
 
 

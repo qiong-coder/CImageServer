@@ -58,7 +58,7 @@ public class ImageLogicImpl implements ImageLogic {
                 return null;
             }
 
-            locations.add(filename_prefix+"/"+image.getSubmittedFileName());
+            locations.add(product+ "/" + path +"/"+image.getSubmittedFileName());
         }
         return locations;
     }

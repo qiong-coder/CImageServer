@@ -27,7 +27,7 @@ public class CImageServerInitializer extends AbstractAnnotationConfigDispatcherS
 
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
-        registration.setMultipartConfig(new MultipartConfigElement(System.getProperty("java.io.tmpdir"), 1024*1024L, 2*1024*1024, 1024*1024));
+        registration.setMultipartConfig(new MultipartConfigElement(System.getProperty("java.io.tmpdir"), 5*1024*1024L, 10*1024*1024, 0));
         //super.customizeRegistration(registration);
     }
 
